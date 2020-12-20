@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     setWindowTitle("SAP Microcode Generator");
+
+    jsonDocument = new QJsonDocument();
+
+    ui->fetchCycle->hide();
 }
 
 MainWindow::~MainWindow()
@@ -15,3 +19,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_showFetchCycle_toggled(bool checked)
+{
+    checked ? ui->fetchCycle->show() : ui->fetchCycle->hide();
+}
+
+void MainWindow::on_save_pressed()
+{
+
+}

@@ -14,7 +14,6 @@ enum AddressingMode
     None
 };
 
-
 struct Instruction
 {
     QString opCode;
