@@ -6,26 +6,63 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>874</width>
-    <height>601</height>
+    <width>1321</width>
+    <height>862</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QPushButton" name="save">
+        <property name="text">
+         <string>Save as File</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="preview">
+        <property name="text">
+         <string>Preview JSON</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_3">
       <property name="text">
        <string>Read from File</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
-       <string>Instruction Data</string>
+       <string>New Instruction Data</string>
       </property>
       <property name="flat">
        <bool>false</bool>
@@ -36,6 +73,42 @@
          <property name="sizeConstraint">
           <enum>QLayout::SetMinimumSize</enum>
          </property>
+         <item row="2" column="2">
+          <widget class="QSpinBox" name="tStates">
+           <property name="minimum">
+            <number>3</number>
+           </property>
+           <property name="maximum">
+            <number>20</number>
+           </property>
+           <property name="value">
+            <number>3</number>
+           </property>
+           <property name="displayIntegerBase">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Bytes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QSpinBox" name="byteCount">
+           <property name="suffix">
+            <string/>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>20</number>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
@@ -43,30 +116,13 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="0" column="2">
           <widget class="QLineEdit" name="opCode"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Binary Code</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="binaryCode"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>TStates</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="tStates">
-           <property name="maximum">
-            <number>20</number>
            </property>
           </widget>
          </item>
@@ -77,23 +133,20 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QComboBox" name="comboBox"/>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_5">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Bytes</string>
+            <string>Binary Code</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QSpinBox" name="byteCount">
-           <property name="suffix">
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="binaryCode"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="affectsFlags">
+           <property name="text">
             <string/>
-           </property>
-           <property name="maximum">
-            <number>20</number>
            </property>
           </widget>
          </item>
@@ -106,101 +159,17 @@
            <property name="title">
             <string>Microcode</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
             <property name="spacing">
              <number>0</number>
             </property>
-            <item row="1" column="6">
-             <widget class="QPushButton" name="pushButton_9">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="8">
-             <widget class="QPushButton" name="pushButton_11">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="12">
-             <widget class="QPushButton" name="pushButton_15">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="text">
-               <string>LF_</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QPushButton" name="pushButton_6">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="9">
-             <widget class="QPushButton" name="pushButton_12">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="11">
-             <widget class="QPushButton" name="pushButton_14">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="7">
-             <widget class="QPushButton" name="pushButton_10">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="10">
-             <widget class="QPushButton" name="pushButton_13">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QPushButton" name="pushButton_5">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QPushButton" name="pushButton_7">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QPushButton" name="pushButton_8">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
+            <property name="leftMargin">
+             <number>9</number>
+            </property>
+            <property name="rightMargin">
+             <number>9</number>
+            </property>
+            <item>
              <widget class="QScrollArea" name="scrollArea">
               <property name="widgetResizable">
                <bool>true</bool>
@@ -210,21 +179,23 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>62</width>
-                 <height>110</height>
+                 <width>1251</width>
+                 <height>163</height>
                 </rect>
                </property>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>Change TState Value to create T States...</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="pushButton">
-              <property name="text">
-               <string>CF</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
              </widget>
             </item>
            </layout>
@@ -248,10 +219,30 @@
            <property name="title">
             <string>Updated Fetch Cycle</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QScrollArea" name="scrollArea_2">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <widget class="QWidget" name="scrollAreaWidgetContents_2">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>1251</width>
+                 <height>162</height>
+                </rect>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_4"/>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="addInstruction">
            <property name="text">
             <string>Add Instruction</string>
            </property>
@@ -262,26 +253,12 @@
       </layout>
      </widget>
     </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Current # of Instructions: 0</string>
       </property>
-      <item>
-       <widget class="QPushButton" name="save">
-        <property name="text">
-         <string>Save</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="preview">
-        <property name="text">
-         <string>Preview</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -290,7 +267,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>874</width>
+     <width>1321</width>
      <height>22</height>
     </rect>
    </property>

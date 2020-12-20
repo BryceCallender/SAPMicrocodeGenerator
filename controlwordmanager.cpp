@@ -1,51 +1,109 @@
 #include "controlwordmanager.h"
 
-ControlWordManager::ControlWordManager(QWidget* parent) : QWidget(parent)
+#include <QLabel>
+#include <QDebug>
+
+ControlWordManager::ControlWordManager(QWidget* parent, int tStates) : QWidget(parent)
 {
-    controlWord = new ControlWord();
+    gridLayout = new QGridLayout();
 
-    gridLayout = new QGridLayout(parent);
+    gridLayout->setHorizontalSpacing(0);
 
-    for (QPair<QString, QVariant>& pair : *controlWord->controlWordList)
+    row = 0;
+    column = 0;
+
+    currentTState = 1;
+
+    for (int i = 0; i < tStates; i++)
     {
-        if(pair.second.type() == QVariant::Bool)
+        controlWords.push_back(new ControlWord());
+    }
+
+    qDebug() << tStates;
+
+    for (ControlWord* cw : qAsConst(controlWords))
+    {
+        column = 0;
+        QLabel* label = new QLabel(QString("T" + QString::number(currentTState)));
+        label->setAlignment(Qt::AlignCenter);
+        gridLayout->addWidget(label, row, column);
+        row++;
+        currentTState++;
+        for(QPair<QString, QVariant>& pair : *cw->controlWordList)
         {
-            QPushButton* widget = new QPushButton(pair.first);
+            if(column == NEW_COLUMN_COUNT)
+            {
+                row++;
+                column = 0;
+            }
 
-            widget->setCheckable(true);
+            if(pair.second.type() == QVariant::Bool)
+            {
+                QPushButton* widget = new QPushButton(pair.first);
 
-            gridLayout->addWidget(widget);
+                widget->setCheckable(true);
+
+                widget->setChecked(pair.second.toBool());
+
+                gridLayout->addWidget(widget, row, column);
+                column++;
+            }
+            else
+            {
+                QLabel* label = new QLabel(pair.first);
+                QSpinBox* widget = new QSpinBox();
+
+                widget->setValue(0);
+                widget->setMinimum(0);
+                widget->setSingleStep(1);
+
+                if(pair.first == "ALU")
+                {
+                    widget->setMaximum(MAX_ALU_NUMBER);
+                }
+                else if(pair.first == "JC")
+                {
+                    widget->setMaximum(MAX_JUMP_NUMBER);
+                }
+
+                gridLayout->addWidget(label, row, column);
+                column++;
+                gridLayout->addWidget(widget, row, column);
+                column++;
+            }
         }
-        else
-        {
-            QSpinBox* widget = new QSpinBox();
+        row++;
+    }
 
-            widget->setValue(0);
-            widget->setMinimum(0);
-            widget->setSingleStep(1);
+    setLayout(gridLayout);
+    //parent->setLayout(gridLayout);
+}
+
+QVector<QString> ControlWordManager::convertControlWordToString()
+{
+    QVector<QString> binary;
+    QString binaryBuilder;
+
+    for (auto cw : qAsConst(controlWords))
+    {
+        for(const auto &pair : qAsConst(*cw->controlWordList))
+        {
+            int value = pair.second.toInt();
+            QString binValue = QString::number(value, 2);
 
             if(pair.first == "ALU")
             {
-                widget->setMaximum(MAX_ALU_NUMBER);
+                binValue = binValue.rightJustified(5, '0');
             }
             else if(pair.first == "JC")
             {
-                widget->setMaximum(MAX_JUMP_NUMBER);
+                binValue = binValue.rightJustified(3, '0');
             }
 
-            gridLayout->addWidget(widget);
+            binaryBuilder.append(binValue);
         }
-    }
-}
 
-QString ControlWordManager::convertControlWordToString()
-{
-    QString binary;
-
-    for (QPair<QString, QVariant>& pair : *controlWord->controlWordList)
-    {
-        int value = pair.second.toInt();
-        binary.append(QString::number(value, 2));
+        binary.push_back(binaryBuilder);
     }
 
     return binary;

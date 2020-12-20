@@ -2,9 +2,15 @@
 #define MAINWINDOW_H
 
 #include "controlwordmanager.h"
+#include "Instruction.h"
+#include "jsonpreview.h"
 
 #include <QMainWindow>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QFile>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,10 +29,21 @@ private slots:
 
     void on_save_pressed();
 
+    void on_addInstruction_pressed();
+
+    void on_tStates_valueChanged(int arg1);
+
+    void on_preview_pressed();
+
 private:
     Ui::MainWindow *ui;
     QJsonDocument *jsonDocument;
-    QVector<ControlWordManager> *microCode;
-    QVector<ControlWordManager> *updatedFetchCycleCode;
+
+    QVector<QJsonObject> instructions;
+
+    ControlWordManager* cwManagerMicroCode;
+    ControlWordManager* cwManagerFetchCycle;
+
+    JSONPreview* jsonPreviewWindow;
 };
 #endif // MAINWINDOW_H
