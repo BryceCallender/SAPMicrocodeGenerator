@@ -19,18 +19,22 @@ SOURCES += \
     controlwordmanager.cpp \
     jsonpreview.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    startwindow.cpp
 
 HEADERS += \
     ControlWord.h \
     Instruction.h \
+    InstructionSet.h \
     controlwordmanager.h \
     jsonpreview.h \
-    mainwindow.h
+    mainwindow.h \
+    startwindow.h
 
 FORMS += \
     jsonpreview.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    startwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

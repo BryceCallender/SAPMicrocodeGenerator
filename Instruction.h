@@ -8,22 +8,17 @@
 #include <QJsonArray>
 #include <QMetaEnum>
 
-
-
-class Instruction : public QObject
+enum AddressingMode
 {
-    Q_OBJECT
-public:
-    enum AddressingMode
-    {
-        Register,
-        Immediate,
-        Direct,
-        Implied,
-        None
-    };
-    Q_ENUM(AddressingMode)
+    Register,
+    Immediate,
+    Direct,
+    Implied,
+    None
+};
 
+struct Instruction
+{
     QString opCode;
     QString binCode;
     int TStates;
@@ -33,7 +28,6 @@ public:
     QVector<QString> microCode;
     QVariant updatedFetchCycleStates;
 
-
     QJsonObject convertToJSON()
     {
         QJsonObject instructionJSON;
@@ -42,7 +36,7 @@ public:
         instructionJSON["BinCode"] = binCode;
         instructionJSON["TStates"] = TStates;
         instructionJSON["AffectsFlags"] = affectsFlags;
-        instructionJSON["AddressingMode"] = QMetaEnum::fromType<AddressingMode>().valueToKey(addressingMode);
+        instructionJSON["AddressingMode"] = enumToString(addressingMode);
 
         QJsonArray microCodeArray;
 
@@ -66,6 +60,18 @@ public:
         }
 
         return instructionJSON;
+    }
+
+    QString enumToString(AddressingMode addressingMode)
+    {
+        switch(addressingMode)
+        {
+            case Register: return "Register";
+            case Immediate: return "Immediate";
+            case Direct: return "Direct";
+            case Implied: return "Implied";
+            case None: return "None";
+        }
     }
 };
 

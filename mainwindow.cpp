@@ -3,21 +3,43 @@
 
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, QJsonDocument *jsonDocument)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    // Setup on window and ui
     ui->setupUi(this);
-
     setWindowTitle("SAP Microcode Generator");
 
-    jsonDocument = new QJsonDocument();
+    if(jsonDocument != nullptr)
+    {
+        this->jsonDocument = jsonDocument;
 
-    ui->fetchCycle->hide();
+        QJsonArray instructionSets = this->jsonDocument->array();
 
+        for (QJsonValue set : instructionSets) {
+            ui->instructionSetList->addItem(set.toObject()["SetName"].toString());
+        }
+
+        // Reset back to the first set in the json file
+        ui->instructionSetList->setCurrentIndex(0);
+    }
+    else
+    {
+        this->jsonDocument = new QJsonDocument();
+    }
+
+
+    // Set up manager for updated fetch's that could be used later
     cwManagerFetchCycle = new ControlWordManager(this, 3);
+    ui->fetchCycleScrollArea->setWidget(cwManagerFetchCycle);
 
-    ui->scrollArea_2->setWidget(cwManagerFetchCycle);
+    // All the UI components being hidden
+    ui->fetchCycle->hide();
+    ui->instructionSetGroupBox->hide();
+
+    // Make sure nothing is focused
+    setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -55,10 +77,7 @@ void MainWindow::on_addInstruction_pressed()
         instruction.updatedFetchCycleStates = QVariant::fromValue(updatedCycle);
     }
 
-    qDebug() << instruction.convertToJSON();
-
-    instructions.push_back(instruction.convertToJSON());
-
+    instructionSets[instructionSetNumber].instructions.push_back(instruction);
 }
 
 void MainWindow::on_save_pressed()
@@ -78,8 +97,21 @@ void MainWindow::on_preview_pressed()
     jsonPreviewWindow = new JSONPreview();
 
 
-
-
     jsonPreviewWindow->setText(jsonDocument->toJson(QJsonDocument::Indented));
     jsonPreviewWindow->show();
+}
+
+void MainWindow::on_instructionSetList_currentIndexChanged(int index)
+{
+    instructionSetNumber = index;
+}
+
+void MainWindow::on_modifyInstruction_pressed()
+{
+    ui->instructionSetGroupBox->show();
+}
+
+void MainWindow::on_instructionList_currentIndexChanged(int index)
+{
+
 }

@@ -11,15 +11,13 @@ ControlWordManager::ControlWordManager(QWidget* parent, int tStates) : QWidget(p
 
     row = 0;
     column = 0;
-
     currentTState = 1;
 
+    // Set up all control word values to NOP
     for (int i = 0; i < tStates; i++)
     {
         controlWords.push_back(new ControlWord());
     }
-
-    qDebug() << tStates;
 
     for (ControlWord* cw : qAsConst(controlWords))
     {
@@ -29,6 +27,7 @@ ControlWordManager::ControlWordManager(QWidget* parent, int tStates) : QWidget(p
         gridLayout->addWidget(label, row, column);
         row++;
         currentTState++;
+
         for(QPair<QString, QVariant>& pair : *cw->controlWordList)
         {
             if(column == NEW_COLUMN_COUNT)
@@ -39,39 +38,53 @@ ControlWordManager::ControlWordManager(QWidget* parent, int tStates) : QWidget(p
 
             if(pair.second.type() == QVariant::Bool)
             {
-                QPushButton* widget = new QPushButton(pair.first);
+                QPushButton* pushButton = new QPushButton(pair.first);
 
-                widget->setCheckable(true);
+                pushButton->setCheckable(true);
 
-                widget->setChecked(pair.second.toBool());
+                pushButton->setChecked(pair.second.toBool());
 
-                gridLayout->addWidget(widget, row, column);
+                gridLayout->addWidget(pushButton, row, column);
                 column++;
             }
             else
             {
                 QLabel* label = new QLabel(pair.first);
-                QSpinBox* widget = new QSpinBox();
+                QSpinBox* spinBox = new QSpinBox();
 
-                widget->setValue(0);
-                widget->setMinimum(0);
-                widget->setSingleStep(1);
+                spinBox->setValue(0);
+                spinBox->setMinimum(0);
+                spinBox->setSingleStep(1);
 
                 if(pair.first == "ALU")
                 {
-                    widget->setMaximum(MAX_ALU_NUMBER);
+                    spinBox->setMaximum(MAX_ALU_NUMBER);
                 }
                 else if(pair.first == "JC")
                 {
-                    widget->setMaximum(MAX_JUMP_NUMBER);
+                    spinBox->setMaximum(MAX_JUMP_NUMBER);
                 }
 
                 gridLayout->addWidget(label, row, column);
                 column++;
-                gridLayout->addWidget(widget, row, column);
+                gridLayout->addWidget(spinBox, row, column);
                 column++;
             }
         }
+        row++;
+
+        // Adds a seperator line between each t State control word section
+        if(currentTState <= tStates)
+        {
+            for(int i = 0; i < NEW_COLUMN_COUNT; i++)
+            {
+                QFrame* line = new QFrame();
+                line->setFrameShape(QFrame::HLine);
+                line->setFrameShadow(QFrame::Sunken);
+                gridLayout->addWidget(line, row, i);
+            }
+        }
+
         row++;
     }
 
