@@ -79,6 +79,54 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <layout class="QGridLayout" name="gridLayout_7">
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="affectsFlags">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="opCode"/>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Bytes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Affects Flags</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="binaryCode"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>TStates</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Binary Code</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Op Code</string>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="1">
               <widget class="QSpinBox" name="tStates">
                <property name="minimum">
@@ -95,55 +143,7 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Affects Flags</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QCheckBox" name="affectsFlags">
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Op Code</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Bytes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="opCode"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Binary Code</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>TStates</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="binaryCode"/>
-             </item>
-             <item row="5" column="1">
+             <item row="6" column="1">
               <widget class="QSpinBox" name="byteCount">
                <property name="suffix">
                 <string/>
@@ -154,6 +154,42 @@
                <property name="maximum">
                 <number>20</number>
                </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Addressing Mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QComboBox" name="addressingMode">
+               <item>
+                <property name="text">
+                 <string>Register</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Immediate</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Direct</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Implied</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -184,7 +220,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>1233</width>
-                   <height>125</height>
+                   <height>95</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_3">
@@ -342,6 +378,11 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <item>
+          <property name="text">
+           <string>-- Select Instruction --</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

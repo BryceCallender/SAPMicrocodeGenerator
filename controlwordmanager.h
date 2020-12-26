@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QScrollArea>
+#include <QVector>
+#include <GridLayoutUtil.h>
 
 class ControlWordManager : public QWidget
 {
@@ -15,7 +17,13 @@ class ControlWordManager : public QWidget
 public:
     explicit ControlWordManager(QWidget* parent = nullptr, int tStates = 3);
     QVector<QString> convertControlWordToString();
+    void setControlWords(const QVector<QString>& words);
+    void setTStateCount(const int count);
 private:
+    void generateControlWordLayout();
+    void cleanUpLayout();
+    void saveChange(int tState, const QString& key, QVariant value);
+
     QVector<ControlWord*> controlWords;
     QGridLayout *gridLayout;
 
@@ -27,6 +35,7 @@ private:
     int column;
 
     int currentTState;
+    int tStates;
 };
 
 #endif // CONTROLWORDMANAGER_H

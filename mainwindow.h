@@ -5,6 +5,7 @@
 #include "Instruction.h"
 #include "jsonpreview.h"
 #include "InstructionSet.h"
+#include "creationdialog.h"
 
 #include <QMainWindow>
 #include <QJsonDocument>
@@ -14,6 +15,7 @@
 #include <QStandardPaths>
 #include <QVector>
 #include <QMessageBox>
+#include <QInputDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,6 +43,8 @@ private slots:
     void on_instructionSetList_currentIndexChanged(int index);
 
     void on_modifyInstruction_pressed();
+
+    void on_instructionList_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

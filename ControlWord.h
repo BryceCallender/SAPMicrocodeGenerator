@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QPair>
 #include <QVector>
+#include <QString>
 
 class ControlWord
 {
@@ -51,6 +52,36 @@ public:
             { "CLR", false },   //Clear bus value when outputting to bus
             { "RTNA", false }   //Return Address => Marks whether to make MAR point to 0xFFFE or 0xFFFF for pc contents in memory
         });
+    }
+
+    void setControlWord(const QString& controlWord)
+    {
+        int index = 0;
+        for(QPair<QString, QVariant>& pair : *controlWordList)
+        {
+            if(pair.second.type() == QVariant::Bool)
+            {
+                pair.second = (bool)controlWord[index].digitValue();
+                index++;
+            }
+            else
+            {
+                int stride = 0;
+                if(pair.first == "ALU")
+                {
+                    stride = 5;
+                }
+                else
+                {
+                    stride = 3;
+                }
+
+                bool ok;
+                pair.second = controlWord.mid(index, stride).toInt(&ok, 2);
+
+                index += stride;
+            }
+        }
     }
 
 };

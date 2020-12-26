@@ -62,6 +62,31 @@ struct Instruction
         return instructionJSON;
     }
 
+    static Instruction JSONToInstruction(const QJsonObject& json)
+    {
+        Instruction instruction;
+
+        instruction.opCode = json["OpCode"].toString();
+        instruction.binCode = json["BinCode"].toString();
+        instruction.TStates = json["TStates"].toInt();
+        instruction.affectsFlags = json["AffectsFlags"].toBool();
+        //instruction.addressingMode = json["AddressingMode"].toVariant();
+
+        QJsonArray binary = json["MicroCode"].toArray();
+
+        foreach (const QJsonValue &bin, binary)
+        {
+            instruction.microCode.push_back(bin.toString());
+        }
+
+        if(json.contains("UpdatedFetchCycleStates"))
+        {
+            instruction.updatedFetchCycleStates = json["UpdatedFetchCycleStates"].toVariant();
+        }
+
+        return instruction;
+    }
+
     QString enumToString(AddressingMode addressingMode)
     {
         switch(addressingMode)

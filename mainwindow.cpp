@@ -17,16 +17,45 @@ MainWindow::MainWindow(QWidget *parent, QJsonDocument *jsonDocument)
 
         QJsonArray instructionSets = this->jsonDocument->array();
 
-        for (QJsonValue set : instructionSets) {
-            ui->instructionSetList->addItem(set.toObject()["SetName"].toString());
+        int i = 0;
+        for (const QJsonValue& set : instructionSets)
+        {
+            QJsonObject instructionSet = set.toObject();
+            this->instructionSets.push_back(InstructionSet());
+
+            ui->instructionSetList->addItem(instructionSet["SetName"].toString());
+
+            this->instructionSets[i].setName = instructionSet["SetName"].toString();
+            this->instructionSets[i].setDescription = instructionSet["SetDescription"].toString();
+
+            QJsonArray instructions = instructionSet["Instructions"].toArray();
+
+            foreach (const QJsonValue& instructions, instructions)
+            {
+                this->instructionSets[i].instructions.push_back(Instruction::JSONToInstruction(instructions.toObject()));
+            }
+
+            i++;
         }
 
         // Reset back to the first set in the json file
-        ui->instructionSetList->setCurrentIndex(0);
+        if(instructionSets.size() == 1)
+        {
+            ui->instructionSetList->currentIndexChanged(0);
+        }
+        else
+        {
+            ui->instructionSetList->setCurrentIndex(0);
+        }
+
+
+        ui->instructionList->setEnabled(true);
     }
     else
     {
         this->jsonDocument = new QJsonDocument();
+
+        ui->modifyInstruction->hide();
     }
 
 
@@ -55,18 +84,47 @@ void MainWindow::on_showFetchCycle_toggled(bool checked)
 
 void MainWindow::on_tStates_valueChanged(int arg1)
 {
-    cwManagerMicroCode = new ControlWordManager(this, arg1);
+    if(cwManagerMicroCode == nullptr)
+    {
+        cwManagerMicroCode = new ControlWordManager(this, arg1);
+    }
+    else
+    {
+        cwManagerMicroCode->setTStateCount(arg1);
+    }
+
     ui->scrollArea->setWidget(cwManagerMicroCode);
 }
 
 void MainWindow::on_addInstruction_pressed()
 {
+    if(instructionSets.isEmpty())
+    {
+        CreationDialog setDialog;
+
+        int result = setDialog.exec();
+
+        if(result == QDialog::Accepted)
+        {
+            QString name = setDialog.getName();
+            QString description = setDialog.getDescription();
+
+            qDebug() << name << description;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+
     Instruction instruction;
 
     instruction.opCode = ui->opCode->text();
     instruction.binCode = ui->binaryCode->text();
     instruction.TStates = ui->tStates->value();
     instruction.affectsFlags = ui->affectsFlags->isChecked();
+    instruction.addressingMode = (AddressingMode)ui->addressingMode->currentIndex();
     instruction.bytes = ui->byteCount->value();
 
     instruction.microCode = cwManagerMicroCode->convertControlWordToString();
@@ -104,6 +162,17 @@ void MainWindow::on_preview_pressed()
 void MainWindow::on_instructionSetList_currentIndexChanged(int index)
 {
     instructionSetNumber = index;
+
+    ui->instructionList->blockSignals(true);
+
+    ui->instructionList->clear();
+    ui->instructionList->addItem("-- Select Instruction --");
+    foreach(const Instruction& instruction, instructionSets[index].instructions)
+    {
+        ui->instructionList->addItem(instruction.opCode);
+    }
+
+    ui->instructionList->blockSignals(false);
 }
 
 void MainWindow::on_modifyInstruction_pressed()
@@ -113,5 +182,17 @@ void MainWindow::on_modifyInstruction_pressed()
 
 void MainWindow::on_instructionList_currentIndexChanged(int index)
 {
+    Instruction chosenInstruction = instructionSets[instructionSetNumber].instructions[index - 1]; // - 1 because of the first fill slot
 
+    cwManagerMicroCode = new ControlWordManager(this, chosenInstruction.TStates);
+    cwManagerMicroCode->setControlWords(chosenInstruction.microCode);
+
+    ui->opCode->setText(chosenInstruction.opCode);
+    ui->binaryCode->setText(chosenInstruction.binCode);
+    ui->tStates->setValue(chosenInstruction.TStates);
+    ui->affectsFlags->setChecked(chosenInstruction.affectsFlags);
+    ui->addressingMode->setCurrentIndex((int)chosenInstruction.addressingMode);
+    ui->byteCount->setValue(chosenInstruction.bytes);
+
+//    ui->scrollArea->setWidget(cwManagerMicroCode);
 }

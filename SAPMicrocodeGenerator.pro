@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     controlwordmanager.cpp \
+    creationdialog.cpp \
     jsonpreview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -24,14 +25,17 @@ SOURCES += \
 
 HEADERS += \
     ControlWord.h \
+    GridLayoutUtil.h \
     Instruction.h \
     InstructionSet.h \
     controlwordmanager.h \
+    creationdialog.h \
     jsonpreview.h \
     mainwindow.h \
     startwindow.h
 
 FORMS += \
+    creationdialog.ui \
     jsonpreview.ui \
     mainwindow.ui \
     startwindow.ui
