@@ -1,6 +1,8 @@
 #include "startwindow.h"
 #include "ui_startwindow.h"
 
+#include <qdebug.h>
+
 StartWindow::StartWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StartWindow)
@@ -37,6 +39,12 @@ void StartWindow::on_resume_pressed()
     }
 
     QJsonDocument jsonDocument = QJsonDocument::fromJson(file.readAll(), &parseError);
+
+    if(file.error() != QFile::NoError)
+    {
+        QMessageBox::warning(this, "Parse Error", parseError.errorString(), QMessageBox::Ok);
+        return;
+    }
 
     this->close();
     mainWindow = new MainWindow(nullptr, &jsonDocument);

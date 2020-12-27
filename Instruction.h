@@ -28,7 +28,7 @@ struct Instruction
     QVector<QString> microCode;
     QVariant updatedFetchCycleStates;
 
-    QJsonObject convertToJSON()
+    QJsonObject toJSON()
     {
         QJsonObject instructionJSON;
 
@@ -62,7 +62,7 @@ struct Instruction
         return instructionJSON;
     }
 
-    static Instruction JSONToInstruction(const QJsonObject& json)
+    static Instruction fromJson(const QJsonObject& json)
     {
         Instruction instruction;
 
@@ -70,7 +70,7 @@ struct Instruction
         instruction.binCode = json["BinCode"].toString();
         instruction.TStates = json["TStates"].toInt();
         instruction.affectsFlags = json["AffectsFlags"].toBool();
-        //instruction.addressingMode = json["AddressingMode"].toVariant();
+        instruction.addressingMode = stringToEnum(json["AddressingMode"].toString());
 
         QJsonArray binary = json["MicroCode"].toArray();
 
@@ -96,6 +96,31 @@ struct Instruction
             case Direct: return "Direct";
             case Implied: return "Implied";
             case None: return "None";
+            default: return "None";
+        }
+    }
+
+    static AddressingMode stringToEnum(QString addressingMode)
+    {
+        if(addressingMode == "Register")
+        {
+            return Register;
+        }
+        else if(addressingMode == "Immediate")
+        {
+            return Immediate;
+        }
+        else if(addressingMode == "Direct")
+        {
+            return Direct;
+        }
+        else if(addressingMode == "Implied")
+        {
+            return Implied;
+        }
+        else
+        {
+            return None;
         }
     }
 };

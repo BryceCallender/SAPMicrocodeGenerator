@@ -6,6 +6,7 @@
 #include "jsonpreview.h"
 #include "InstructionSet.h"
 #include "creationdialog.h"
+#include "settingsmanager.h"
 
 #include <QMainWindow>
 #include <QJsonDocument>
@@ -27,6 +28,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr, QJsonDocument* jsonDocument = nullptr);
+    void closeEvent(QCloseEvent *event);
     ~MainWindow();
 
 private slots:
@@ -46,7 +48,12 @@ private slots:
 
     void on_instructionList_currentIndexChanged(int index);
 
+    void on_addSetButton_pressed();
+
 private:
+    void clearInstructionUI();
+
+
     Ui::MainWindow *ui;
     QJsonDocument* jsonDocument;
 
@@ -58,5 +65,8 @@ private:
     JSONPreview* jsonPreviewWindow;
 
     int instructionSetNumber = 0;
+
+    Instruction currentInstruction;
+    int currentInstructionIndex = -1;
 };
 #endif // MAINWINDOW_H

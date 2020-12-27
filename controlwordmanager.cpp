@@ -49,6 +49,7 @@ QVector<QString> ControlWordManager::convertControlWordToString()
         }
 
         binary.push_back(binaryBuilder);
+        binaryBuilder = "";
     }
 
     return binary;
@@ -98,7 +99,6 @@ void ControlWordManager::generateControlWordLayout()
         gridLayout->addWidget(label, row, column);
         row++;
 
-
         for(QPair<QString, QVariant>& pair : *cw->controlWordList)
         {
             if(column == NEW_COLUMN_COUNT)
@@ -118,7 +118,8 @@ void ControlWordManager::generateControlWordLayout()
                 gridLayout->addWidget(pushButton, row, column);
 
                 int state = currentTState;
-                connect(pushButton, &QPushButton::released, [this, pushButton, state]() {
+                connect(pushButton, &QPushButton::released, [this, pushButton, state]()
+                {
                     saveChange(state, pushButton->text(), pushButton->isChecked());
                 });
 
@@ -149,7 +150,8 @@ void ControlWordManager::generateControlWordLayout()
                 gridLayout->addWidget(spinBox, row, column);
 
                 int state = currentTState;
-                connect(spinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [this, label, state](int value) {
+                connect(spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [this, label, state](int value)
+                {
                     saveChange(state, label->text(), value);
                 });
 
@@ -186,7 +188,6 @@ void ControlWordManager::cleanUpLayout()
         {
             GridLayoutUtil::removeColumn(gridLayout, j);
         }
-
         GridLayoutUtil::removeRow(gridLayout, i);
     }
 
