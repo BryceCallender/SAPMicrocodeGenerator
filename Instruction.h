@@ -37,6 +37,7 @@ struct Instruction
         instructionJSON["TStates"] = TStates;
         instructionJSON["AffectsFlags"] = affectsFlags;
         instructionJSON["AddressingMode"] = enumToString(addressingMode);
+        instructionJSON["Bytes"] = bytes;
 
         QJsonArray microCodeArray;
 
@@ -71,6 +72,7 @@ struct Instruction
         instruction.TStates = json["TStates"].toInt();
         instruction.affectsFlags = json["AffectsFlags"].toBool();
         instruction.addressingMode = stringToEnum(json["AddressingMode"].toString());
+        instruction.bytes = json["Bytes"].toInt();
 
         QJsonArray binary = json["MicroCode"].toArray();
 

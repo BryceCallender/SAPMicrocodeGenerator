@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent, QJsonDocument *jsonDocument)
         ui->currentSetLabel->setText(QString("<h2>Current Instruction Set:") + " <span style='color:#4CAF50'> " + this->instructionSets[instructionSetNumber].setName + "</span></h2>");
 
         ui->instructionList->setEnabled(true);
+        ui->instructionListLabel->setEnabled(true);
     }
     else
     {
@@ -164,15 +165,13 @@ void MainWindow::on_addInstruction_pressed()
         instructionSets[instructionSetNumber].instructions.push_back(instruction);
     }
 
-
     currentInstruction = Instruction();
     currentInstructionIndex = -1;
 }
 
 void MainWindow::on_save_pressed()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
-        tr("Save File"), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
 
     if(!fileName.contains(".json"))
     {
@@ -236,6 +235,9 @@ void MainWindow::on_modifyInstruction_pressed()
 
 void MainWindow::clearInstructionUI()
 {
+    cwManagerMicroCode = new ControlWordManager(this, 3);
+    cwManagerFetchCycle = new ControlWordManager(this, 3);
+
     ui->opCode->setText("");
     ui->binaryCode->setText("");
     ui->tStates->setValue(3);
@@ -243,18 +245,16 @@ void MainWindow::clearInstructionUI()
     ui->addressingMode->setCurrentIndex(0);
     ui->byteCount->setValue(1);
 
-    cwManagerMicroCode = nullptr;
-    cwManagerFetchCycle = nullptr;
-
     ui->showFetchCycle->setChecked(false);
 }
 
 void MainWindow::on_instructionList_currentIndexChanged(int index)
 {
+    clearInstructionUI();
+
     if(index == 0)
     {
         ui->addInstruction->setText("Add Instruction");
-        clearInstructionUI();
         return;
     }
 
@@ -292,6 +292,9 @@ void MainWindow::on_addSetButton_pressed()
         instructionSets.push_back(newInstructionSet);
 
         ui->modifyInstruction->show();
+
+        ui->instructionList->setEnabled(true);
+        ui->instructionListLabel->setEnabled(true);
 
         ui->instructionSetList->blockSignals(true);
         ui->instructionSetList->addItem(newInstructionSet.setName);

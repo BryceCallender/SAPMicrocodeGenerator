@@ -31,7 +31,7 @@ void SettingsManager::saveSettings()
 
 QVariant SettingsManager::getValue(const QString &key)
 {
-    if(key.contains("geometry"))
+    if(key.contains("mainGeometry"))
     {
         return settings->value(key, QRect(0,0,1321,862)); //hard code values that make it nice
     }
@@ -39,7 +39,7 @@ QVariant SettingsManager::getValue(const QString &key)
     return QVariant();
 }
 
-void SettingsManager::saveValue(const QString &groupName, const QString &name, QVariant data)
+void SettingsManager::saveValue(const QString &groupName, const QString &name, const QVariant &data)
 {
     settings->beginGroup(groupName);
         settings->setValue(name, data);
