@@ -26,6 +26,12 @@ public:
             { "EIP1", false },  //Enable Input Port 1
             { "EIP2", false },  //Enable Input Port 2
 
+            { "LM_", true },    //Load RAM (MAR)
+            { "EM_", true },    //Enable RAM
+            { "LR_", true },    //Load RAM from MDR
+            { "LMDR_", true },  //Load Memory Data Register
+            { "EMDR", false },  //Enable Memory Data Register
+
             { "LA_", true },    //Load Accumulator
             { "EA", false },    //Enable Accumulator
             { "LT_", true },    //Load Temp
@@ -36,17 +42,12 @@ public:
             { "EC", false },    //Enable C
             { "LF", false},     //Load flag
             { "EU", false },    //Enable ALU
-            { "ALU", 0 },       //ALU Control flags
-            { "JC", 0 },        //Jump Control flags
-
-            { "LM_", true },    //Load RAM (MAR)
-            { "EM_", true },    //Enable RAM
-            { "LR_", true },    //Load RAM from MDR
-            { "LMDR_", true },  //Load Memory Data Register
-            { "EMDR", false },  //Enable Memory Data Register
 
             { "LO3_", true },   //Load Output port 3
             { "LO4_", true },   //Load Output port 4
+
+            { "ALU", 0 },       //ALU Control flags
+            { "JC", 0 },        //Jump Control flags
 
             { "UB", false },    //take bus upper byte if on or output to bus upper byte
             { "CLR", false },   //Clear bus value when outputting to bus
