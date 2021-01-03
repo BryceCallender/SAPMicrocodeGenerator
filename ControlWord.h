@@ -43,14 +43,13 @@ public:
             { "LF", false},     //Load flag
             { "EU", false },    //Enable ALU
 
-            { "LO3_", true },   //Load Output port 3
-            { "LO4_", true },   //Load Output port 4
+            { "LO_", true },   //Load Output ports
 
             { "ALU", 0 },       //ALU Control flags
             { "JC", 0 },        //Jump Control flags
 
             { "UB", false },    //take bus upper byte if on or output to bus upper byte
-            { "CLR", false },   //Clear bus value when outputting to bus
+            { "CLR", true },   //Clear bus value when outputting to bus
             { "RTNA", false }   //Return Address => Marks whether to make MAR point to 0xFFFE or 0xFFFF for pc contents in memory
         });
     }

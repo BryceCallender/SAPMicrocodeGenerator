@@ -10,6 +10,7 @@
 #include <QScrollArea>
 #include <QVector>
 #include <GridLayoutUtil.h>
+#include <QVector>
 
 class ControlWordManager : public QWidget
 {
@@ -17,7 +18,7 @@ class ControlWordManager : public QWidget
 public:
     explicit ControlWordManager(QWidget* parent = nullptr, int tStates = 3);
     QVector<QString> convertControlWordToString();
-    void setControlWords(const QVector<QString>& words);
+    void setControlWords(QVector<QString> &words);
     void setTStateCount(const int count);
 private:
     void generateControlWordLayout();
@@ -36,6 +37,8 @@ private:
 
     int currentTState;
     int tStates;
+
+    QVector<QString> fetchCycle = { "011100011101010101000100000000010", "101100111101010101000100000000010", "001000101111010101000100000000010" };
 };
 
 #endif // CONTROLWORDMANAGER_H

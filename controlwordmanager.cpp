@@ -55,11 +55,15 @@ QVector<QString> ControlWordManager::convertControlWordToString()
     return binary;
 }
 
-void ControlWordManager::setControlWords(const QVector<QString>& words)
+void ControlWordManager::setControlWords(QVector<QString>& words)
 {
     for(int i = 0; i < words.size(); i++)
     {
-        if(words[i] == "")
+        if(words[i] == "" && i < 3)
+        {
+            words[i] = fetchCycle[i];
+        }
+        else if(words[i] == "")
         {
             continue;
         }

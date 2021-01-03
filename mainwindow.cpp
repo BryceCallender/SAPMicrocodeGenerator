@@ -64,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent, QJsonDocument *jsonDocument)
 
     // Set up manager for updated fetch's that could be used later
     cwManagerFetchCycle = new ControlWordManager(this, 3);
+    QVector<QString> fetchCycleInit = {"", "", ""}; //dummy object to force it to use the fetch cycle inits on the buttons/spin boxes
+    cwManagerFetchCycle->setControlWords(fetchCycleInit);
     ui->fetchCycleScrollArea->setWidget(cwManagerFetchCycle);
 
     // All the UI components being hidden
