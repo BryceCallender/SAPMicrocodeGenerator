@@ -151,11 +151,15 @@ void MainWindow::on_addInstruction_pressed()
     instruction.bytes = ui->byteCount->value();
 
     instruction.microCode = cwManagerMicroCode->convertControlWordToString();
-    QVector<QString> updatedCycle = cwManagerFetchCycle->convertControlWordToString();
 
-    if(updatedCycle.size() > 0)
+    if(ui->showFetchCycle)
     {
-        instruction.updatedFetchCycleStates = QVariant::fromValue(updatedCycle);
+        QVector<QString> updatedCycle = cwManagerFetchCycle->convertControlWordToString();
+
+        if(updatedCycle.size() > 0)
+        {
+            instruction.updatedFetchCycleStates = QVariant::fromValue(updatedCycle);
+        }
     }
 
     if(currentInstructionIndex != -1)
