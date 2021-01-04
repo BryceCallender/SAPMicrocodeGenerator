@@ -152,7 +152,7 @@ void MainWindow::on_addInstruction_pressed()
 
     instruction.microCode = cwManagerMicroCode->convertControlWordToString();
 
-    if(ui->showFetchCycle)
+    if(ui->showFetchCycle->isChecked())
     {
         QVector<QString> updatedCycle = cwManagerFetchCycle->convertControlWordToString();
 
@@ -252,6 +252,9 @@ void MainWindow::clearInstructionUI()
     ui->byteCount->setValue(1);
 
     ui->showFetchCycle->setChecked(false);
+
+    QVector<QString> fetchCycleInit = {"", "", ""}; //dummy object to force it to use the fetch cycle inits on the buttons/spin boxes
+    cwManagerFetchCycle->setControlWords(fetchCycleInit);
 }
 
 void MainWindow::on_instructionList_currentIndexChanged(int index)
