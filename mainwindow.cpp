@@ -242,7 +242,7 @@ void MainWindow::on_modifyInstruction_pressed()
 void MainWindow::clearInstructionUI()
 {
     cwManagerMicroCode = new ControlWordManager(this, 3);
-    cwManagerFetchCycle = new ControlWordManager(this, 3);
+    //cwManagerFetchCycle = new ControlWordManager(this, 3);
 
     ui->opCode->setText("");
     ui->binaryCode->setText("");
@@ -274,6 +274,9 @@ void MainWindow::on_instructionList_currentIndexChanged(int index)
 
     cwManagerMicroCode = new ControlWordManager(this, chosenInstruction.TStates);
     cwManagerMicroCode->setControlWords(chosenInstruction.microCode);
+
+    QVector<QString> fetchCycle = chosenInstruction.updatedFetchCycleStates.value<QVector<QString>>();
+    cwManagerFetchCycle->setControlWords(fetchCycle);
 
     ui->opCode->setText(chosenInstruction.opCode);
     ui->binaryCode->setText(chosenInstruction.binCode);
