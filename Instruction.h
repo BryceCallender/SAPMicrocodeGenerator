@@ -50,9 +50,9 @@ struct Instruction
 
         QJsonArray fetchCycleArray;
 
-        foreach (const QString& code, updatedFetchCycleStates.value<QVector<QString>>())
+        foreach (const QVariant& code, updatedFetchCycleStates.toList())
         {
-           fetchCycleArray.push_back(code);
+           fetchCycleArray.push_back(code.toString());
         }
 
         if(fetchCycleArray.size() > 0)

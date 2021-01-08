@@ -152,7 +152,7 @@ void MainWindow::on_addInstruction_pressed()
 
     instruction.microCode = cwManagerMicroCode->convertControlWordToString();
 
-    if(ui->showFetchCycle->isChecked())
+    if(ui->showFetchCycle->isChecked() || instruction.updatedFetchCycleStates.isValid())
     {
         QVector<QString> updatedCycle = cwManagerFetchCycle->convertControlWordToString();
 
@@ -275,7 +275,14 @@ void MainWindow::on_instructionList_currentIndexChanged(int index)
     cwManagerMicroCode = new ControlWordManager(this, chosenInstruction.TStates);
     cwManagerMicroCode->setControlWords(chosenInstruction.microCode);
 
-    QVector<QString> fetchCycle = chosenInstruction.updatedFetchCycleStates.value<QVector<QString>>();
+    ui->showFetchCycle->setChecked(chosenInstruction.updatedFetchCycleStates.isValid());
+
+    QVector<QString> fetchCycle;
+    foreach(const QVariant& code, chosenInstruction.updatedFetchCycleStates.toList())
+    {
+        fetchCycle.push_back(code.toString());
+    }
+
     cwManagerFetchCycle->setControlWords(fetchCycle);
 
     ui->opCode->setText(chosenInstruction.opCode);
@@ -284,6 +291,8 @@ void MainWindow::on_instructionList_currentIndexChanged(int index)
     ui->affectsFlags->setChecked(chosenInstruction.affectsFlags);
     ui->addressingMode->setCurrentIndex((int)chosenInstruction.addressingMode);
     ui->byteCount->setValue(chosenInstruction.bytes);
+
+
 
     ui->addInstruction->setText("Modify Instruction");
 }
